@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherHM2 extends AppCompatActivity {
 
     private TextView tv_city;
     private FloatingActionButton buttonFab;
