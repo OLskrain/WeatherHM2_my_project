@@ -17,6 +17,7 @@ import es.dmoral.toasty.Toasty;
 public class SecondActivity extends AppCompatActivity {
 
     private EditText et_secondActivity;
+    private Fragment1 fragment1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,5 +74,8 @@ public class SecondActivity extends AppCompatActivity {
         }else {
             Toasty.warning(getApplicationContext(), getResources().getString(R.string.repeated_input), Toast.LENGTH_SHORT).show();
         }
+//        Bundle bundle = new Bundle();
+//        bundle.putString("ntcn",et_secondActivity.getText().toString().trim() );
+//        fragment1.setArguments(bundle);
     }
 }

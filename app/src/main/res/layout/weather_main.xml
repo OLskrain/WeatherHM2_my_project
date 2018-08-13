@@ -69,7 +69,32 @@
 
         </RelativeLayout>
 
+        <FrameLayout
+            android:id="@+id/fragment_main"
+            android:layout_below="@+id/element1"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_1"
+            android:layout_below="@+id/fragment_main"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_2"
+            android:layout_below="@+id/fragment_1"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
     </RelativeLayout>
+
 <!--подключили наш макет кнопки к главному макету-->
     <include layout="@layout/bottom_container" />
 
