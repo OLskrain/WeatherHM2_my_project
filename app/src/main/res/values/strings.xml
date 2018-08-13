@@ -1,0 +1,28 @@
+<resources>
+    <!--То, что переводиться не будет-->
+    <string name="temperature">+27 С&#176;</string>
+    <string name="TAG">WeatherActivity</string>
+    <string name="TEXT">TEXT</string>
+    <string name="onCreate">onCreate()</string>
+    <string name="onStart">onStart()</string>
+    <string name="onRestoreInstanceState">oonRestoreInstanceState()</string>
+    <string name="onPause">onPause()</string>
+    <string name="onSaveInstanceState">onSaveInstanceState()</string>
+    <string name="onResume">onResume()</string>
+    <string name="onRestart">onRestart()</string>
+    <string name="onStop">onStop()</string>
+    <string name="onDestroy">onDestroy()</string>
+    <string name="Create_action">Create action</string>
+    <string name="maxLength">5</string>
+
+    <!--То, что потом переведем-->
+    <string name="app_name">Weather</string>
+    <string name="city">St. Petersburg</string>
+    <string name="first_start">Fist start!</string>
+    <string name="restart">Restart!</string>
+    <string name="write_city">Write the city</string>
+    <string name="start_new_activity">Start a new activity!</string>
+    <string name="repeated_input">Enter the name of the city!</string>
+    <string name="character_limit">Character limit exceeded!</string>
+    <string name="nameCityKey">nameCityKey</string>
+</resources>
