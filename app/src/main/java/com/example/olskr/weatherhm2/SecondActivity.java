@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends BaseActivity {
 
     private EditText et_secondActivity;
 

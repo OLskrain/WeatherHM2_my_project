@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/les</item>
+
     </style>
 
     <!--здесь мы создали свой стиль, где указали что отключили системный актив бар и поставили свой и прописали все это
@@ -21,6 +22,16 @@
         <item name="android:textColorHint">@color/colorText</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
+        <item name="editTextStyle">@style/AppEditTextStyle</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.MyTheme.AppBarOverlay" parent="AppTheme.NoActionBar.MyTheme" />
+
+    <style name="AppTheme.NoActionBar.MyTheme.PopupOverlay" parent="AppTheme.NoActionBar.MyTheme" />
+
+
+    <style name="AppEditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
 </resources>

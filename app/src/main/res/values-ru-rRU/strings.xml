@@ -8,4 +8,7 @@
     <string name="start_new_activity">Запускаем новую activity!</string>
     <string name="repeated_input">Введите название города!</string>
     <string name="character_limit">Превышен лимит символов!</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О приложении</string>
+    <string name="UserName">Иван Иванов</string>
 </resources>
