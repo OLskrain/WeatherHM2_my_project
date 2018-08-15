@@ -14,14 +14,13 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 
-public class WeatherHM2 extends AppCompatActivity implements PublishGetter{
+public class WeatherHM2 extends AppCompatActivity {
 
     private TextView tv_city;
     private FloatingActionButton buttonFab;
     private Boolean isPressed = false;
     private String nameCity;
 
-    private final Publisher publisher = new Publisher();
     private final WeatherPresenter presenter = WeatherPresenter.getInstance();
 
     //методы жизненного цикла
@@ -50,24 +49,6 @@ public class WeatherHM2 extends AppCompatActivity implements PublishGetter{
                 }
             }
         });
-
-        // Создаем фрагменты
-        Fragment1 fragment1 = new Fragment1();
-        Fragment2 fragment2 = new Fragment2();
-        MainFragment mainFragment = new MainFragment();
-
-        // Подписываем фрагменты
-        publisher.subscribe(fragment1);
-        publisher.subscribe(fragment2);
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        // добавить фрагменты
-        fragmentTransaction.add(R.id.fragment_main, mainFragment);
-        fragmentTransaction.add(R.id.fragment_1, fragment1);
-        fragmentTransaction.add(R.id.fragment_2, fragment2);
-        // закрыть транзакцию
-        fragmentTransaction.commit();
-
     }
 
     private void startNewActivity(){
@@ -111,12 +92,5 @@ public class WeatherHM2 extends AppCompatActivity implements PublishGetter{
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(getResources().getString(R.string.nameCityKey), presenter.getNameCity());
 
-    }
-
-    // Снимем с активити обязанность по передаче событий классу Publisher
-    // главный фрагмент будет использовать его для  передачи событий
-    @Override
-    public Publisher getPublisher() {
-        return publisher;
     }
 }
