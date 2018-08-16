@@ -25,14 +25,15 @@
         <item name="editTextStyle">@style/AppEditTextStyle</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.MyTheme.AppBarOverlay" parent="AppTheme.NoActionBar.MyTheme" />
-
-    <style name="AppTheme.NoActionBar.MyTheme.PopupOverlay" parent="AppTheme.NoActionBar.MyTheme" />
-
-
     <style name="AppEditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:textColor">@color/colorText</item>
     </style>
+
+    <style name="AppTheme.NoActionBar.MyTheme.AppBarOverlay"  />
+    <style name="AppTheme.NoActionBar.MyTheme.PopupOverlay"  />
+
+
+
 
 </resources>
 

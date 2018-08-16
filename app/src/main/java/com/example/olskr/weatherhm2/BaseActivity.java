@@ -5,18 +5,18 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 public class BaseActivity extends AppCompatActivity
-        implements BaseView.View,NavigationView.OnNavigationItemSelectedListener {
+        implements BaseView.View,BaseFragment.Callback, NavigationView.OnNavigationItemSelectedListener {
 
     private TextView tv_city;
     private FloatingActionButton buttonFab;
@@ -49,7 +49,6 @@ public class BaseActivity extends AppCompatActivity
 
         //вызываем элемент(кнопку) по id
         buttonFab = findViewById(R.id.buttonFab);
-        tv_city = findViewById(R.id.tv_city);
 
         //слушатель для нашей кнопки
         buttonFab.setOnClickListener(new View.OnClickListener() {
@@ -58,16 +57,19 @@ public class BaseActivity extends AppCompatActivity
             public void onClick(View view) {
                 if(!isPressed){              //проверка на то, чтобы пользователь не смог запустить случайно несколько активностей
                     isPressed = true;
-                    startNewActivity();
+                    addFragment(new CreateActionFragment());
                 }
             }
         });
+
+        addFragment(new WeatherFragment()); //наш первый фрагмент
     }
 
-    private void startNewActivity() {
-        //при старте новой активити передаем компонент старой активити
-        Intent intent = new Intent(this, SecondActivity.class);
-        startActivityForResult(intent, 1);
+    private void addFragment(Fragment fragment){ // метод для добавления фрагмента
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
     }
 
     @Override
@@ -139,4 +141,18 @@ public class BaseActivity extends AppCompatActivity
 
     @Override
     public void initDrawer(String username, Bitmap profileImage) {}
+
+    @Override
+    public void onFragmentAttached() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+
+    }
+
+    public void startWeatherFragment() {
+        addFragment(new WeatherFragment());
+    }
 }

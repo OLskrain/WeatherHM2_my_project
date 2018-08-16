@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-public class BaseFragment extends Fragment implements BaseView.View{
+abstract class BaseFragment extends Fragment implements BaseView.View{
 
     private BaseActivity baseActivity;
 
@@ -18,21 +18,39 @@ public class BaseFragment extends Fragment implements BaseView.View{
         initLayout(view, savedInstanceState);
     }
 
-    private void initLayout(View view, Bundle savedInstanceState) {}
+    protected abstract void initLayout(View view, Bundle savedInstanceState);
 
     @Override
     public void onAttach(Context context) { //когда связываемся с активностью
         super.onAttach(context);
+        baseActivity = (BaseActivity) context;
+        baseActivity.onFragmentAttached();
+    }
 
+    @Override
+    public void onDetach() { //больше не присоединены к нашей активности
+        baseActivity = null;
+        super.onDetach();
+    }
+
+    public BaseActivity getBaseActivity() { //чтобы мы могли получать от наследуюмых фрагментов baseActivity
+        return baseActivity;
     }
 
     @Override
     public Boolean inNetworkAvailable() {
-        return null;
+        if(baseActivity != null){
+            return baseActivity.inNetworkAvailable();
+        }
+        return false;
     }
 
     @Override
-    public void initDrawer(String username, Bitmap profileImage) {
+    public void initDrawer(String username, Bitmap profileImage) {}
 
+    interface Callback{
+        void onFragmentAttached(); //здесь мы поймем, что фрагмент подключен к активити
+
+        void onFragmentDetached(String tag); // что фрагмент отключен,передаем название фрагмента
     }
 }
