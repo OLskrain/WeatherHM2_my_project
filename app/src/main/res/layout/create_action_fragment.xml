@@ -20,6 +20,19 @@
         android:inputType="textImeMultiLine"
         android:imeOptions="actionSend"
         />
+
+    <Button
+        android:id="@+id/button_action_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_action_fragment"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/default_padding"
+        android:layout_marginStart="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_padding"
+        android:hint="@string/done"
+        android:maxLength="@string/maxLength"
+        />
     <!--Не работает android:maxLength="@string/maxLength". разобраться-->
 </RelativeLayout>
     </android.support.constraint.ConstraintLayout>

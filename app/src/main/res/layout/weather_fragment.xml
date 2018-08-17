@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.olskr.weatherhm2.BaseActivity">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/element1"
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/default_padding"
+                android:text=""
+                android:textSize="@dimen/text_size_30" />
+
+            <TextView
+                android:id="@+id/weather_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginStart="@dimen/default_padding"
+                android:text="@string/temperatureC"
+                android:textSize="@dimen/text_size_80"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/wind_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_city"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_toEndOf="@+id/weather_value"
+                android:text="@string/wind"
+                android:textSize="@dimen/text_size_20" />
+
+            <TextView
+                android:id="@+id/pressure_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wind_value"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_toEndOf="@+id/weather_value"
+                android:text="@string/pressure"
+                android:textSize="@dimen/text_size_20" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

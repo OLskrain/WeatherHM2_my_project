@@ -12,14 +12,14 @@ public final class WeatherPresenter {
     // Внутреннее поле, будет хранить единственный экземпляр
     private static WeatherPresenter instance = null;
 
-    // Это наш счетчик
+    // Это наше название грода
     private String nameCity;
 
     // Конструктор (вызывать извне его нельзя, поэтому он приватный)
     private WeatherPresenter(){
     }
 
-    // Увеличение счетчика
+    // инициализация
     public void initializationNameCity(String nameCity){
        this.nameCity = nameCity;
     }

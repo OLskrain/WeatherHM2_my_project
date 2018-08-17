@@ -11,4 +11,10 @@
     <string name="settings">Настройки</string>
     <string name="about">О приложении</string>
     <string name="UserName">Иван Иванов</string>
+    <string name="temperature">Температура</string>
+    <string name="temperatureCelsius">Градус цельсия</string>
+    <string name="temperatureFahrenheit">Градус фаренгейта</string>
+    <string name="save">Сохранить</string>
+    <string name="wind">2 м/с, ЮЗ</string>
+    <string name="pressure">765 мм.рт.ст</string>
 </resources>

@@ -1,14 +1,14 @@
 package com.example.olskr.weatherhm2;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
-abstract class BaseFragment extends Fragment implements BaseView.View{
+abstract class BaseFragment extends Fragment{
 
     private BaseActivity baseActivity;
 
@@ -24,7 +24,6 @@ abstract class BaseFragment extends Fragment implements BaseView.View{
     public void onAttach(Context context) { //когда связываемся с активностью
         super.onAttach(context);
         baseActivity = (BaseActivity) context;
-        baseActivity.onFragmentAttached();
     }
 
     @Override
@@ -37,20 +36,11 @@ abstract class BaseFragment extends Fragment implements BaseView.View{
         return baseActivity;
     }
 
-    @Override
-    public Boolean inNetworkAvailable() {
-        if(baseActivity != null){
-            return baseActivity.inNetworkAvailable();
-        }
-        return false;
+    public void getToasty(String log, String resources) {
+        baseActivity.toasty(log, resources);
     }
 
-    @Override
-    public void initDrawer(String username, Bitmap profileImage) {}
-
-    interface Callback{
-        void onFragmentAttached(); //здесь мы поймем, что фрагмент подключен к активити
-
-        void onFragmentDetached(String tag); // что фрагмент отключен,передаем название фрагмента
+    public void changeIsPressed(boolean value){
+        baseActivity.setIsPressed(value);
     }
 }

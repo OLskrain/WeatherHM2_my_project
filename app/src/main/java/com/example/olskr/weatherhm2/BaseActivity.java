@@ -11,19 +11,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import es.dmoral.toasty.Toasty;
 
 public class BaseActivity extends AppCompatActivity
-        implements BaseView.View,BaseFragment.Callback, NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView tv_city;
     private FloatingActionButton buttonFab;
-    private Boolean isPressed = false;
-    private String nameCity;
-
+    private boolean isPressed;
     private final WeatherPresenter presenter = WeatherPresenter.getInstance();
+
+    public void setIsPressed(Boolean pressed) {
+        this.isPressed = pressed;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +62,10 @@ public class BaseActivity extends AppCompatActivity
             public void onClick(View view) {
                 if(!isPressed){              //проверка на то, чтобы пользователь не смог запустить случайно несколько активностей
                     isPressed = true;
+                    getCurrentFragment();
                     addFragment(new CreateActionFragment());
                 }
+
             }
         });
 
@@ -73,38 +80,15 @@ public class BaseActivity extends AppCompatActivity
     }
 
     @Override
-    //получаем данный из второй активити
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {
-            return;
-        }
-
-        nameCity = data.getStringExtra(getResources().getString(R.string.TEXT));
-        presenter.initializationNameCity(nameCity);
-
-        tv_city.setText(presenter.getNameCity());
-        isPressed = false;
-    }
-
-    @Override
-    //восстанавливаем данные после перезапуска
-    protected void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(getResources().getString(R.string.nameCityKey))) {
-            nameCity = savedInstanceState.getString(getResources().getString(R.string.nameCityKey));
-
-            presenter.initializationNameCity(nameCity);
-            tv_city.setText(presenter.getNameCity());
-        }
-    }
-
-    @Override
     //сохраняем данные перед перезапуском
     protected void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(getResources().getString(R.string.nameCityKey), presenter.getNameCity());
 
+    }
+
+    private void getCurrentFragment(){ //узнаем какой сейчас фрагмент, для настройки нашшей кнопки в дальнейшем
+        getSupportFragmentManager().findFragmentById(R.id.content_frame);
     }
 
     @Override
@@ -125,6 +109,8 @@ public class BaseActivity extends AppCompatActivity
 
         if (id == R.id.nav_settings) {   // наши кнопки в меню навигации
 
+            getCurrentFragment();
+            addFragment(new SettingsFrafment());
         } else if (id == R.id.nav_info) {
 
         }
@@ -134,25 +120,15 @@ public class BaseActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public Boolean inNetworkAvailable() {
-        return true;
+    public void startWeatherFragment(String city) {
+        addFragment(WeatherFragment.newInstance(city));
     }
 
-    @Override
-    public void initDrawer(String username, Bitmap profileImage) {}
-
-    @Override
-    public void onFragmentAttached() {
-
-    }
-
-    @Override
-    public void onFragmentDetached(String tag) {
-
-    }
-
-    public void startWeatherFragment() {
-        addFragment(new WeatherFragment());
+    public void toasty(String log, String resources){
+        if(log.equals(getResources().getString(R.string.warning))){
+            Toasty.warning(getApplicationContext(), resources, Toast.LENGTH_SHORT).show();
+        }if(log.equals(R.string.success)){
+            Toasty.success(getApplicationContext(), resources, Toast.LENGTH_SHORT).show();
+        }
     }
 }
