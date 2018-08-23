@@ -17,4 +17,5 @@
     <string name="save">Сохранить</string>
     <string name="wind">2 м/с, ЮЗ</string>
     <string name="pressure">765 мм.рт.ст</string>
+    <string name="add">Добавить</string>
 </resources>

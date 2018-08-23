@@ -23,7 +23,9 @@ abstract class BaseFragment extends Fragment{
     @Override
     public void onAttach(Context context) { //когда связываемся с активностью
         super.onAttach(context);
-        baseActivity = (BaseActivity) context;
+        if (getActivity() != null){
+             baseActivity = (BaseActivity) getActivity();
+        }
     }
 
     @Override
