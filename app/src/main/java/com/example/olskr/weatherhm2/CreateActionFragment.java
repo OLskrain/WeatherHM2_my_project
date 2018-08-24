@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 
@@ -30,6 +32,7 @@ public class CreateActionFragment extends BaseFragment {
 
     private EditText et_action_fragment;
     private Button button_action_fragment;
+    TextInputEditText login;
 
     @Nullable
     @Override
@@ -58,33 +61,55 @@ public class CreateActionFragment extends BaseFragment {
 
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {
-        et_action_fragment = view.findViewById(R.id.et_action_fragment);
+
         button_action_fragment = view.findViewById(R.id.button_action_fragment);
 
-       et_action_fragment.setFilters(new InputFilter[] {
-                new InputFilter() {
-                    public CharSequence filter(CharSequence src, int start, int end, Spanned dst, int dstart, int dend) {
-                        if(et_action_fragment.getText().toString().trim().length() < 25){
-                            if (src.equals("")||src.equals("-")) { // for backspace
-                                return src;
-                            }
-                            if (src.toString().matches("[a-zA-Z ]+")||src.toString().matches("[а-яА-Я ]+")) {
-                                return src;
-                            }
-                            return "";
-                        }
-                        getToasty(getResources().getString(R.string.warning), getResources().getString(R.string.character_limit) );
-                        return "";
-                    }
-                }
+        // регулярные выражения, позволяют проверить на соответсвие шаблону
+        // Это имя первая буква большая латинская, остальные маленькие латинские
+        final Pattern checkLogin = Pattern.compile("^[A-Z][a-z]{2,}$");
+
+        login = view.findViewById(R.id.inputLoginName);
+
+        // Чтобы не докучать пользователю при вводе каждой буквы, сделаем проверку при потере фокуса
+        login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            // как только фокус потерян, сразу проверяем на валидность данные
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) return;
+                TextView tv = (TextView) v;
+                // это сама валидация, огна вынесена в отдельный метод, чтобы не дублировать код
+                // см вызов ниже
+                validate(tv, checkLogin, "Неккоректный ввод!");
+            }
         });
 
         button_action_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getBaseActivity().startWeatherFragment(et_action_fragment.getText().toString().trim()); //отправляем значение города
+                getBaseActivity().startWeatherFragment(login.getText().toString().trim()); //отправляем значение города
                 changeIsPressed(false);
             }
         });
+    }
+
+    // Валидация
+    private void validate(TextView tv, Pattern check, String message){
+        String value = tv.getText().toString();
+        if (check.matcher(value).matches()){    // проверим на основе регулярных выражений
+            hideError(tv);
+        }
+        else{
+            showError(tv, message);
+        }
+    }
+
+    // показать ошибку
+    private void showError(TextView view, String message) {
+        view.setError(message);
+    }
+
+    // спрятать ошибку
+    private void hideError(TextView view) {
+        view.setError(null);
     }
 }

@@ -32,6 +32,9 @@
     <style name="AppTheme.NoActionBar.MyTheme.AppBarOverlay"  />
     <style name="AppTheme.NoActionBar.MyTheme.PopupOverlay"  />
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 
 

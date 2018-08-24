@@ -1,31 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"> <!--отступ на размер тулбара-->
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/et_action_fragment"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_padding"
-        android:layout_marginStart="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
-        android:hint="@string/write_city"
-        android:maxLength="@string/maxLength"
-        android:inputType="textImeMultiLine"
-        android:imeOptions="actionSend"
-        />
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:orientation="vertical">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/loginName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/inputLoginName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/write_city"
+                android:inputType="textPersonName"/>
+        </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/button_action_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_action_fragment"
+        android:layout_below="@+id/loginName"
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/default_padding"
         android:layout_marginStart="@dimen/default_padding"
@@ -35,4 +45,55 @@
         />
     <!--Не работает android:maxLength="@string/maxLength". разобраться-->
 </RelativeLayout>
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.example.olskr.weatherhm2.DiscountCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" />
+
+        <fragment
+        android:id="@+id/fragment2"
+        android:name="com.example.olskr.weatherhm2.DiscountCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        />
+
+        <fragment
+            android:id="@+id/fragment3"
+            android:name="com.example.olskr.weatherhm2.DiscountCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            />
+
+        <fragment
+            android:id="@+id/fragment4"
+            android:name="com.example.olskr.weatherhm2.DiscountCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            />
+        <fragment
+            android:id="@+id/fragment5"
+            android:name="com.example.olskr.weatherhm2.DiscountCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            />
+
+
+    </LinearLayout>
     </android.support.constraint.ConstraintLayout>

@@ -23,33 +23,33 @@ public class SettingsFrafment extends BaseFragment {
     }
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {
-        button_settings_fragment = view.findViewById(R.id.button_action_fragment);
-
-        shape = getString(R.string.temperatureC);
-
-        RadioButton radioButton1 = view.findViewById(R.id.radioButton11);
-        radioButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shape = getString(R.string.temperatureC);
-            }
-        });
-
-        RadioButton radioButton2 = view.findViewById(R.id.radioButton22);
-        radioButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shape = getString(R.string.temperatureF);
-            }
-        });
-
-        button_settings_fragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                getBaseActivity().startWeatherFragment(shape); //отправляем значение города
-//                changeIsPressed(false);
-            }
-        });
+//        button_settings_fragment = view.findViewById(R.id.button_action_fragment);
+//
+//        shape = getString(R.string.temperatureC);
+//
+//        RadioButton radioButton1 = view.findViewById(R.id.radioButton11);
+//        radioButton1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                shape = getString(R.string.temperatureC);
+//            }
+//        });
+//
+//        RadioButton radioButton2 = view.findViewById(R.id.radioButton22);
+//        radioButton2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                shape = getString(R.string.temperatureF);
+//            }
+//        });
+//
+//        button_settings_fragment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                getBaseActivity().startWeatherFragment(shape); //отправляем значение города
+////                changeIsPressed(false);
+//            }
+//        });
     }
 
 }

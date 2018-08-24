@@ -112,7 +112,8 @@ public class BaseActivity extends AppCompatActivity
             getCurrentFragment();
             addFragment(new SettingsFrafment());
         } else if (id == R.id.nav_info) {
-
+            getCurrentFragment();
+            addFragment(new AboutFragment());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
