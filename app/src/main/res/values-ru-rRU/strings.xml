@@ -18,4 +18,7 @@
     <string name="wind">2 м/с, ЮЗ</string>
     <string name="pressure">765 мм.рт.ст</string>
     <string name="add">Добавить</string>
+    <string name="menu_list_cities">Список городов</string>
+
+    <string name="evaluate">Оценить приложение</string>
 </resources>

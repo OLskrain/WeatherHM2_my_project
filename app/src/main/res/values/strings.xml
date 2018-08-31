@@ -58,4 +58,7 @@
     <string name="wind">2 m/s, SW</string>
     <string name="pressure">765 mm mer</string>
     <string name="add">Add</string>
+    <string name="menu_list_cities">list city</string>
+
+    <string name="evaluate">Rate app</string>
 </resources>

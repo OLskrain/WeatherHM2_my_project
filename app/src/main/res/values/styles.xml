@@ -7,9 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/les</item>
-
     </style>
-
     <!--здесь мы создали свой стиль, где указали что отключили системный актив бар и поставили свой и прописали все это
     все в манивесте. тогда нам не надо к нему обрашаться в коде основного класса-->
     <style name="AppTheme.NoActionBar">
@@ -35,8 +33,19 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
-
-
+    <!--C 36 по 49 - изменение стиля для option menu и зщзгьутг-->
+    <style name="AppTheme.NoActionBar.MyTheme.CustomActionBarTheme">
+        <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
+        <item name="android:itemTextAppearance">@style/TextAppearance</item>
+    </style>
+    <!-- Popup Menu Background Color styles -->
+    <style name="MyPopupMenu"
+        parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@color/side_nav_bar_centre</item>
+    </style>
+    <!-- Popup Menu Text Color styles -->
+    <style name="TextAppearance">
+        <item name="android:textColor">@color/side_nav_bar_centre</item>
+    </style>
 </resources>
 

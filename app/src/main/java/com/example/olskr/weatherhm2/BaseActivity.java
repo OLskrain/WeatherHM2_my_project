@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -120,6 +121,37 @@ public class BaseActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    // Меню Action bar - установка меню в action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    // Меню Action bar - выбор пункта меню
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_list_cities:
+                goToListCities();
+                return true;
+            case R.id.menu_settings:
+                goToSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void goToListCities() {
+        Toast.makeText(this, "Переходим в список городов", Toast.LENGTH_SHORT).show();
+    }
+
+    private void goToSettings(){
+        Toast.makeText(this, "Переходим в настройки", Toast.LENGTH_SHORT).show();
+    }
+
 
     public void startWeatherFragment(String city) {
         addFragment(WeatherFragment.newInstance(city));
