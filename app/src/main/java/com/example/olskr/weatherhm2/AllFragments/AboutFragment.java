@@ -1,4 +1,4 @@
-package com.example.olskr.weatherhm2;
+package com.example.olskr.weatherhm2.AllFragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AboutFragment extends BaseFragment{
+import com.example.olskr.weatherhm2.R;
+
+public class AboutFragment extends BaseFragment {
 
     private final static String TEXT_CONTENT = "В 2014 году на конференции был представлен новый подход к дизайну приложений. " +
             "Это попытка сделать единообразный интерфейс для всех приложений Google, " +

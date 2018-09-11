@@ -1,32 +1,22 @@
-package com.example.olskr.weatherhm2;
+package com.example.olskr.weatherhm2.AllFragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
+import com.example.olskr.weatherhm2.AllFragments.BaseFragment;
+import com.example.olskr.weatherhm2.R;
+
 import java.util.regex.Pattern;
-
-import es.dmoral.toasty.Toasty;
 
 public class CreateActionFragment extends BaseFragment {
 
@@ -83,13 +73,13 @@ public class CreateActionFragment extends BaseFragment {
             }
         });
 
-        button_action_fragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getBaseActivity().startWeatherFragment(login.getText().toString().trim()); //отправляем значение города
-                changeIsPressed(false);
-            }
-        });
+//        button_action_fragment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getBaseActivity().startWeatherFragment(login.getText().toString().trim()); //отправляем значение города
+//                changeIsPressed(false);
+//            }
+//        });
     }
 
     // Валидация

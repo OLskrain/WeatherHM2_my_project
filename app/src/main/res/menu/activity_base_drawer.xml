@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <!--android:checkableBehavior="single" - позволяет выделять выбранный пункт-->
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_settings"
@@ -12,10 +13,17 @@
             android:id="@+id/nav_info"
             android:icon="@drawable/ic_info_outline_24dp"
             android:title="@string/about" />
-        <item
-            android:id="@+id/nav_evaluate"
-            android:icon="@drawable/ic_star_black_24dp"
-            android:title="@string/evaluate" />
     </group>
 
+    <!--Реализация подменю-->
+    <item android:title="@string/title_communicate">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_evaluate"
+                    android:icon="@drawable/ic_star_black_24dp"
+                    android:title="@string/evaluate" />
+            </group>
+        </menu>
+    </item>
 </menu>
