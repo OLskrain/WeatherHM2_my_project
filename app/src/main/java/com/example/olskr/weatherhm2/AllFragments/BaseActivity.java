@@ -28,18 +28,18 @@ import es.dmoral.toasty.Toasty;
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FloatingActionButton buttonFab;
-    private boolean isPressed;
-    private final WeatherPresenter presenter = WeatherPresenter.getInstance();
+//    private FloatingActionButton buttonFab;
+//    private boolean isPressed;
+//    private final WeatherPresenter presenter = WeatherPresenter.getInstance();
 
     private static final String POSITIVE_BUTTON_TEXT = "Go";
     private static final String WEATHER_FRAGMENT_TAG = "43ddDcdd-c9e0-4794-B7e6-cf05af49fbf0";
 
     public CityPreference cityPreference;
 
-    public void setIsPressed(Boolean pressed) {
-        this.isPressed = pressed;
-    }
+//    public void setIsPressed(Boolean pressed) {
+//        this.isPressed = pressed;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,35 +64,36 @@ public class BaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //вызываем элемент(кнопку) по id
-        buttonFab = findViewById(R.id.buttonFab);
+//        buttonFab = findViewById(R.id.buttonFab);
 
-        //слушатель для нашей кнопки
-        buttonFab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (!isPressed){              //проверка на то, чтобы пользователь не смог запустить случайно несколько активностей
-                    isPressed = true;
-                    getCurrentFragment();
-                    addFragment(new CreateActionFragment());
-                }
-
-            }
-        });
+//        //слушатель для нашей кнопки
+//        buttonFab.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                if (!isPressed){              //проверка на то, чтобы пользователь не смог запустить случайно несколько активностей
+//                    isPressed = true;
+//                    getCurrentFragment();
+//                    addFragment(new CreateActionFragment());
+//                }
+//
+//            }
+//        });
 
         cityPreference = new CityPreference(this);//теперь мы можем сохранять данные и получать их из нашего класса
         //если мы приложение только открыли
-        addFragment(new WeatherFragment()); //наш первый фрагмент
+        if(savedInstanceState == null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content_frame, new WeatherFragment(), WEATHER_FRAGMENT_TAG)
+                    .commit();
+        }
     }
 
     private void addFragment(Fragment fragment){ // метод для добавления фрагмента
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.content_frame, fragment)
-//                .commit();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.content_frame, new WeatherFragment(), WEATHER_FRAGMENT_TAG)
+                .replace(R.id.content_frame, fragment)
                 .commit();
     }
 
@@ -100,13 +101,13 @@ public class BaseActivity extends AppCompatActivity
     //сохраняем данные перед перезапуском
     protected void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(getResources().getString(R.string.nameCityKey), presenter.getNameCity());
+//        savedInstanceState.putString(getResources().getString(R.string.nameCityKey), presenter.getNameCity());
 
     }
 
-    private void getCurrentFragment(){ //узнаем какой сейчас фрагмент, для настройки нашшей кнопки в дальнейшем
-        getSupportFragmentManager().findFragmentById(R.id.content_frame);
-    }
+//    private void getCurrentFragment(){ //узнаем какой сейчас фрагмент, для настройки нашшей кнопки в дальнейшем
+//        getSupportFragmentManager().findFragmentById(R.id.content_frame);
+//    }
 
     @Override
     public void onBackPressed() {
@@ -122,20 +123,24 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_settings) {   // наши кнопки в меню навигации
-
-            getCurrentFragment();
-            addFragment(new SettingsFrafment());
-        } else if (id == R.id.nav_info) {
-            getCurrentFragment();
-            addFragment(new AboutFragment());
-        }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        switch (item.getItemId()) {
+            case R.id.nav_settings:                  // наши кнопки в меню навигации
+                addFragment(new SettingsFrafment());
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_info:
+                addFragment(new AboutFragment());
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_evaluate:
+                goToRateApp();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            default:
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+        }
     }
 
     // Меню Action bar - установка меню в action bar
@@ -153,7 +158,7 @@ public class BaseActivity extends AppCompatActivity
                 goToListCities();
                 return true;
             case R.id.menu_settings:
-                goToSettings();
+                addFragment(new SettingsFrafment());
                 return true;
             case R.id.change_city:
                 showInputDialog();
@@ -196,8 +201,11 @@ public class BaseActivity extends AppCompatActivity
         Toast.makeText(this, "Переходим в список городов", Toast.LENGTH_SHORT).show();
     }
 
-    private void goToSettings(){
-        Toast.makeText(this, "Переходим в настройки", Toast.LENGTH_SHORT).show();
+//    private void goToSettings(){
+//        Toast.makeText(this, "Переходим в настройки", Toast.LENGTH_SHORT).show();
+//    }
+    private void goToRateApp(){
+        Toast.makeText(this, "Переходим к оценке приложения", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -43,7 +43,7 @@ abstract class BaseFragment extends Fragment{
         baseActivity.toasty(log, resources);
     }
 
-    public void changeIsPressed(boolean value){
-        baseActivity.setIsPressed(value);
-    }
+//    public void changeIsPressed(boolean value){
+//        baseActivity.setIsPressed(value);
+//    }
 }

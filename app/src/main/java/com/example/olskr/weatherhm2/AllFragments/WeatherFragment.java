@@ -31,10 +31,10 @@ import java.util.Locale;
 
 public class WeatherFragment extends BaseFragment {
 
-    private final WeatherPresenter presenter = WeatherPresenter.getInstance();
-    private static final String ARG_CITY = "ARG_CITY";
-    private TextView city_field;
-    private String nameCity;
+//    private final WeatherPresenter presenter = WeatherPresenter.getInstance();
+//    private static final String ARG_CITY = "ARG_CITY";
+//    private TextView city_field;
+//    private String nameCity;
 
     //Классовые переменные
     private static final String LOG_TAG = "WeatherFragment";

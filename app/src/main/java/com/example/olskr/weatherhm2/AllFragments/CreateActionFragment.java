@@ -44,10 +44,10 @@ public class CreateActionFragment extends BaseFragment {
         Log.d(getResources().getString(R.string.createActionFragment), getResources().getString(R.string.onAttach));
     }
 
-    @Override
-    public void changeIsPressed(boolean value) {
-        super.changeIsPressed(value);
-    }
+//    @Override
+////    public void changeIsPressed(boolean value) {
+////        super.changeIsPressed(value);
+////    }
 
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {

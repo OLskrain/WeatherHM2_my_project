@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AllFragments.BaseActivity">
 
     <android.support.design.widget.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/les"
+        tools:context=".AllFragments.BaseActivity">
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -31,7 +28,6 @@
                 android:textStyle="bold" />
 
         </RelativeLayout>
-    </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/content_frame"
@@ -39,7 +35,9 @@
         android:layout_height="match_parent" />
 
     <!--подключили наш макет кнопки к главному макету-->
-    <include layout="@layout/bottom_container" />
+    <!--<include layout="@layout/bottom_container" />-->
+</android.support.design.widget.AppBarLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+
+
