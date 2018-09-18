@@ -80,4 +80,5 @@
     <string name="place_not_found">Sorry, no weather data found.</string>
 
     <string name="Error_server">Ошибка сервера</string>
+    <string name="Open_weather_map_app_id">ac8e27ae2dc7a85df994b9c9b6293ea8</string>
 </resources>

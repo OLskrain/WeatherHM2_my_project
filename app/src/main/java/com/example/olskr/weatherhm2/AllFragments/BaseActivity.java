@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.olskr.weatherhm2.CityPreference;
 import com.example.olskr.weatherhm2.R;
-import com.example.olskr.weatherhm2.WeatherPresenter;
 
 import es.dmoral.toasty.Toasty;
 

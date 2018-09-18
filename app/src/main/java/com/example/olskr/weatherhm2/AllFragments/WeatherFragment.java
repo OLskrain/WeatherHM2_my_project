@@ -17,10 +17,10 @@ import android.widget.Toast;
 import com.example.olskr.weatherhm2.CityPreference;
 import com.example.olskr.weatherhm2.DataSourceBuilder;
 import com.example.olskr.weatherhm2.R;
-import com.example.olskr.weatherhm2.RequestMaker;
 import com.example.olskr.weatherhm2.Soc;
 import com.example.olskr.weatherhm2.SocnetAdapter;
-import com.example.olskr.weatherhm2.WeatherPresenter;
+import com.example.olskr.weatherhm2.interfaces.OpenWeather;
+import com.example.olskr.weatherhm2.model.WeatherRequest;
 
 import org.json.JSONObject;
 
@@ -28,6 +28,12 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherFragment extends BaseFragment {
 
@@ -39,6 +45,7 @@ public class WeatherFragment extends BaseFragment {
     //Классовые переменные
     private static final String LOG_TAG = "WeatherFragment";
     private static final String FONT_FILENAME = "fonts/weather.ttf";
+    private OpenWeather openWeather;
 
     //Реализация иконок погоды через шрифт (но можно и через setImageDrawable)
     private Typeface weatherFont;
@@ -63,10 +70,15 @@ public class WeatherFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         BaseActivity activity = (BaseActivity) getActivity();
-        weatherFont = Typeface.createFromAsset(getActivity().getAssets(), FONT_FILENAME);//находим наш шрифт
-        updateWeatherData(new CityPreference(activity).getCity());
-        //получаем или восстанавливаем значение города
 
+        weatherFont = Typeface.createFromAsset(getActivity().getAssets(), FONT_FILENAME);//находим наш шрифт
+        initRetorfit(); //в рамках последних архитектурных теорий. лучше выносить бизнес логику в призенторы
+        updateWeatherData(new CityPreference(activity).getCity());
+
+        /**В дальнейшем изменить на MVP модель*/
+
+
+        //получаем или восстанавливаем значение города
 //        if (savedInstanceState != null && savedInstanceState.containsKey(getResources().getString(R.string.nameCityKey))) {
 //            nameCity = savedInstanceState.getString(getResources().getString(R.string.nameCityKey));
 //        }else if(getArguments() != null){
@@ -83,10 +95,10 @@ public class WeatherFragment extends BaseFragment {
         updatedTextView = rootView.findViewById(R.id.updated_field);
         detailsTextView = rootView.findViewById(R.id.details_field);
         currentTemperatureTextView = rootView.findViewById(R.id.current_temperature_field);
-        weatherIcon = rootView.findViewById(R.id.weather_icon);
+//        weatherIcon = rootView.findViewById(R.id.weather_icon);
         status = rootView.findViewById(R.id.status);
 
-        weatherIcon.setTypeface(weatherFont);
+//        weatherIcon.setTypeface(weatherFont);
         return rootView;
     }
 
@@ -121,52 +133,89 @@ public class WeatherFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
     }
 
+    //метод построения запроса
+    private void initRetorfit(){
+        Retrofit retrofit;
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.openweathermap.org/") // Базовая часть адреса
+                // Конвертер, необходимый для преобразования JSON'а в объекты
+                .addConverterFactory(GsonConverterFactory.create())  //десериализатор JSON
+                .build();
+        // Создаем объект, при помощи которого будем выполнять запросы
+        openWeather = retrofit.create(OpenWeather.class);
+    }
+
     //Обновление/загрузка погодных данных
     //тут рекомендуеться отображать процесс загрузки
     private void updateWeatherData(final String city) {
-        // Создадим объект класса делателя запросов и налету сделаем анонимный класс слушателя
-        final RequestMaker requestMaker = new RequestMaker(new RequestMaker.OnRequestListener() {
-            // Обновим прогресс
-            @Override
-            public void onStatusProgress(String updateProgress) {
-                status.setText(updateProgress);
-            }
-            // по окончании загрузки страницы вызовем этот метод, который и вставит текст в WebView
-            @Override
-            public void onComplete(JSONObject json) {
-                if (json == null) {
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.place_not_found),
-                            Toast.LENGTH_LONG).show();
-                    Log.d(LOG_TAG, "ERROR");
-                }else{
-                    renderWeather(json);
-                }
-            }
-        });
+//        // Создадим объект класса делателя запросов и налету сделаем анонимный класс слушателя
+//        final RequestMaker requestMaker = new RequestMaker(new RequestMaker.OnRequestListener() {
+//            // Обновим прогресс
+//            @Override
+//            public void onStatusProgress(String updateProgress) {
+//                status.setText(updateProgress);
+//            }
+//            // по окончании загрузки страницы вызовем этот метод, который и вставит текст в WebView
+//            @Override
+//            public void onComplete(JSONObject json) {
+//                if (json == null) {
+//                    Toast.makeText(getActivity(), getActivity().getString(R.string.place_not_found),
+//                            Toast.LENGTH_LONG).show();
+//                    Log.d(LOG_TAG, "ERROR");
+//                }else{
+//                    renderWeather(json);
+//                }
+//            }
+//        });
+//
+//        requestMaker.make(city);
+        Log.d("ERRROOOOOOOORRR","Зашли в поток");
+        openWeather.loadWeather(city, getResources().getString(R.string.Open_weather_map_app_id))
+                .enqueue(new Callback<WeatherRequest>() {
+                    @Override
+                    //onResponse - метод обратного вызова. вызывается при удачном запросу
+                    public void onResponse(Call<WeatherRequest> call,
+                                           Response<WeatherRequest> response) {
+                        if (response.body() != null) {
+                            Log.d("ERRROOOOOOOORRR","все хорошо");
+                            renderWeather(response);
+//                            textTemp.setText(Float.toString(response.body().getMain().getTemp()));
+                        }
+                    }
 
-        requestMaker.make(city);
+                    @Override
+                    //вызывается при неудачном запросе
+                    public void onFailure(Call<WeatherRequest> call, Throwable t) {
+                        status.setText(getResources().getString(R.string.Error_server));
+                    }
+                });
     }
 
     //Обработка загруженных данных
-    private void renderWeather(JSONObject json) {
+    private void renderWeather(Response<WeatherRequest> response) {
         try {
-            cityTextView.setText(json.getString("name").toUpperCase(Locale.US) + ", "
-                    + json.getJSONObject("sys").getString("country"));
+            Log.d("ERRROOOOOOOORRR","Выводим данные");
+//            cityTextView.setText(json.getString("name").toUpperCase(Locale.US) + ", "
+//                    + json.getJSONObject("sys").getString("country"));
+            cityTextView.setText(response.body().getName().toUpperCase(Locale.US) + ", "
+                    + response.body().getSys().getCountry());
 
-            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
-            JSONObject main = json.getJSONObject("main");
-            detailsTextView.setText(details.getString("description").toUpperCase(Locale.US) + "\n" + "Humidity: "
-                    + main.getString("humidity") + "%" + "\n" + "Pressure: " + main.getString("pressure") + " hPa");
+//            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+//            JSONObject main = json.getJSONObject("main");
+            detailsTextView.setText(response.body().getWeather() + "\n" + "Humidity: "
+                    + response.body().getMain().getHumidity() + "%" + "\n" + "Pressure: " + response.body().getMain().getPressure() + " hPa");
 
-            currentTemperatureTextView.setText(String.format("%.1f", main.getDouble("temp")) + " ℃");
+            currentTemperatureTextView.setText(String.format("%.1f", response.body().getMain().getTemp()) + " ℃");
 
             DateFormat df = DateFormat.getDateTimeInstance();
-            String updatedOn = df.format(new Date(json.getLong("dt") * 1000));
+            String updatedOn = df.format(new Date(response.body().getDt() * 1000));
             updatedTextView.setText("Last update: " + updatedOn);
 
             //получение иконки
-            setWeatherIcon(details.getInt("id"), json.getJSONObject("sys").getLong("sunrise") * 1000,
-                    json.getJSONObject("sys").getLong("sunset") * 1000);
+//            setWeatherIcon(details.getInt("id"), json.getJSONObject("sys").getLong("sunrise") * 1000,
+//                    json.getJSONObject("sys").getLong("sunset") * 1000);
+//            setWeatherIcon(response.body().getWeather(getId()), response.body().getSys().getSunrise() * 1000,
+//                    response.body().getSys().getSunset() * 1000);
 
         } catch (Exception e) {
             Log.e("SimpleWeather", "One or more fields not found in the JSON data");
@@ -207,7 +256,7 @@ public class WeatherFragment extends BaseFragment {
                     break;
             }
         }
-        weatherIcon.setText(icon);
+//        weatherIcon.setText(icon);
     }
 
     //Метод для доступа кнопки меню к данным

@@ -1,4 +1,4 @@
-package com.example.olskr.weatherhm2;
+package com.example.olskr.weatherhm2.NotUsed;
 
 // Это Presenter, делаем его на основе паттерна "одиночка"
 // Этот паттерн обладает свойством, хранить один экземпляр объекта на все приложение.
@@ -8,6 +8,8 @@ package com.example.olskr.weatherhm2;
 // то создает его. И возвращает это поле.
 // Таким образом в пролижении всегда существует только один объект.
 // Класс, реализующий синглтон нельзя наследовать.
+
+/**Больше пока что не используется*/
 public final class WeatherPresenter {
     // Внутреннее поле, будет хранить единственный экземпляр
     private static WeatherPresenter instance = null;
