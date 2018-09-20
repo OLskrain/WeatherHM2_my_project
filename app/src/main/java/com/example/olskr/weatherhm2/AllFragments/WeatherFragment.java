@@ -75,9 +75,6 @@ public class WeatherFragment extends BaseFragment {
         initRetorfit(); //в рамках последних архитектурных теорий. лучше выносить бизнес логику в призенторы
         updateWeatherData(new CityPreference(activity).getCity());
 
-        /**В дальнейшем изменить на MVP модель*/
-
-
         //получаем или восстанавливаем значение города
 //        if (savedInstanceState != null && savedInstanceState.containsKey(getResources().getString(R.string.nameCityKey))) {
 //            nameCity = savedInstanceState.getString(getResources().getString(R.string.nameCityKey));
@@ -95,10 +92,10 @@ public class WeatherFragment extends BaseFragment {
         updatedTextView = rootView.findViewById(R.id.updated_field);
         detailsTextView = rootView.findViewById(R.id.details_field);
         currentTemperatureTextView = rootView.findViewById(R.id.current_temperature_field);
-//        weatherIcon = rootView.findViewById(R.id.weather_icon);
+        weatherIcon = rootView.findViewById(R.id.weather_icon);
         status = rootView.findViewById(R.id.status);
 
-//        weatherIcon.setTypeface(weatherFont);
+        weatherIcon.setTypeface(weatherFont);
         return rootView;
     }
 
@@ -111,9 +108,6 @@ public class WeatherFragment extends BaseFragment {
 
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {
-//        city_field = view.findViewById(R.id.city_field);
-//        city_field.setText(presenter.getNameCity());                         //выводим значение
-
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
         // установим аниматор по умолчанию
@@ -147,42 +141,21 @@ public class WeatherFragment extends BaseFragment {
 
     //Обновление/загрузка погодных данных
     //тут рекомендуеться отображать процесс загрузки
+    /**В дальнейшем изменить на MVP модель*/
+
     private void updateWeatherData(final String city) {
-//        // Создадим объект класса делателя запросов и налету сделаем анонимный класс слушателя
-//        final RequestMaker requestMaker = new RequestMaker(new RequestMaker.OnRequestListener() {
-//            // Обновим прогресс
-//            @Override
-//            public void onStatusProgress(String updateProgress) {
-//                status.setText(updateProgress);
-//            }
-//            // по окончании загрузки страницы вызовем этот метод, который и вставит текст в WebView
-//            @Override
-//            public void onComplete(JSONObject json) {
-//                if (json == null) {
-//                    Toast.makeText(getActivity(), getActivity().getString(R.string.place_not_found),
-//                            Toast.LENGTH_LONG).show();
-//                    Log.d(LOG_TAG, "ERROR");
-//                }else{
-//                    renderWeather(json);
-//                }
-//            }
-//        });
-//
-//        requestMaker.make(city);
-        Log.d("ERRROOOOOOOORRR","Зашли в поток");
-        openWeather.loadWeather(city, getResources().getString(R.string.Open_weather_map_app_id))
+        //"metric" - параметр, который говорит что мы делаем запрос метрических данных
+        openWeather.loadWeather(city, getResources().getString(R.string.Open_weather_map_app_id),"metric" )
                 .enqueue(new Callback<WeatherRequest>() {
                     @Override
                     //onResponse - метод обратного вызова. вызывается при удачном запросу
                     public void onResponse(Call<WeatherRequest> call,
                                            Response<WeatherRequest> response) {
                         if (response.body() != null) {
-                            Log.d("ERRROOOOOOOORRR","все хорошо");
                             renderWeather(response);
-//                            textTemp.setText(Float.toString(response.body().getMain().getTemp()));
+                            status.setText(getResources().getString(R.string.data_uploaded));
                         }
                     }
-
                     @Override
                     //вызывается при неудачном запросе
                     public void onFailure(Call<WeatherRequest> call, Throwable t) {
@@ -194,28 +167,22 @@ public class WeatherFragment extends BaseFragment {
     //Обработка загруженных данных
     private void renderWeather(Response<WeatherRequest> response) {
         try {
-            Log.d("ERRROOOOOOOORRR","Выводим данные");
-//            cityTextView.setText(json.getString("name").toUpperCase(Locale.US) + ", "
-//                    + json.getJSONObject("sys").getString("country"));
-            cityTextView.setText(response.body().getName().toUpperCase(Locale.US) + ", "
-                    + response.body().getSys().getCountry());
+            cityTextView.setText(String.format("%S, %s",
+                    response.body().getName().toUpperCase(Locale.US),response.body().getSys().getCountry()));
 
-//            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
-//            JSONObject main = json.getJSONObject("main");
-            detailsTextView.setText(response.body().getWeather() + "\n" + "Humidity: "
-                    + response.body().getMain().getHumidity() + "%" + "\n" + "Pressure: " + response.body().getMain().getPressure() + " hPa");
+            detailsTextView.setText(String.format("%s\nHumidity: %s%%\nPressure: %s hPa",
+                    response.body().getWeather()[0].getDescription().toUpperCase(Locale.US),
+                    response.body().getMain().getHumidity(),response.body().getMain().getPressure()));
 
-            currentTemperatureTextView.setText(String.format("%.1f", response.body().getMain().getTemp()) + " ℃");
+            currentTemperatureTextView.setText(String.format(Locale.US,"%.1f  ℃", response.body().getMain().getTemp()));
 
             DateFormat df = DateFormat.getDateTimeInstance();
             String updatedOn = df.format(new Date(response.body().getDt() * 1000));
-            updatedTextView.setText("Last update: " + updatedOn);
+            updatedTextView.setText(String.format("Last update: %S", updatedOn));
 
             //получение иконки
-//            setWeatherIcon(details.getInt("id"), json.getJSONObject("sys").getLong("sunrise") * 1000,
-//                    json.getJSONObject("sys").getLong("sunset") * 1000);
-//            setWeatherIcon(response.body().getWeather(getId()), response.body().getSys().getSunrise() * 1000,
-//                    response.body().getSys().getSunset() * 1000);
+            setWeatherIcon(response.body().getWeather()[0].getId(), response.body().getSys().getSunrise() * 1000,
+                    response.body().getSys().getSunset() * 1000);
 
         } catch (Exception e) {
             Log.e("SimpleWeather", "One or more fields not found in the JSON data");
@@ -256,7 +223,7 @@ public class WeatherFragment extends BaseFragment {
                     break;
             }
         }
-//        weatherIcon.setText(icon);
+        weatherIcon.setText(icon);
     }
 
     //Метод для доступа кнопки меню к данным
