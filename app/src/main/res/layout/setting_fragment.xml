@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/default_padding"
             android:layout_marginStart="@dimen/default_padding"
-            android:text="@string/temperature"
+            android:text="@string/locating"
             android:textSize="@dimen/text_size_30" />
 
         <RadioGroup
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/temperatureCelsius"
+                android:text="@string/by_coordinates"
                 android:textColor="@color/colorText"/>
 
             <RadioButton
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/temperatureFahrenheit"
+                android:text="@string/by_city_name"
                 android:textColor="@color/colorText"/>
 
             <Button

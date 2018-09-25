@@ -20,7 +20,7 @@
 //    @Override
 //    protected void onCreate(@Nullable Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.create_action_fragment);
+//        setContentView(R.layout.list_cities_fragment);
 //
 //        et_secondActivity = findViewById(R.id.et_secondActivity);
 //

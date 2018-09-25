@@ -12,17 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.olskr.weatherhm2.CityPreference;
-import com.example.olskr.weatherhm2.DataSourceBuilder;
+import com.example.olskr.weatherhm2.CustomAppSetting;
+import com.example.olskr.weatherhm2.ArrayAdapter.DataSourceBuilder;
 import com.example.olskr.weatherhm2.R;
-import com.example.olskr.weatherhm2.Soc;
-import com.example.olskr.weatherhm2.SocnetAdapter;
-import com.example.olskr.weatherhm2.interfaces.OpenWeather;
+import com.example.olskr.weatherhm2.ArrayAdapter.Soc;
+import com.example.olskr.weatherhm2.ArrayAdapter.SocnetAdapter;
+import com.example.olskr.weatherhm2.interfaces.OpenWeatherByCoordinates;
 import com.example.olskr.weatherhm2.model.WeatherRequest;
-
-import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -45,12 +42,14 @@ public class WeatherFragment extends BaseFragment {
     //Классовые переменные
     private static final String LOG_TAG = "WeatherFragment";
     private static final String FONT_FILENAME = "fonts/weather.ttf";
-    private OpenWeather openWeather;
+    private OpenWeatherByCoordinates openWeatherByCoordinates;
+
+    SettingsFragment settingsFragment = new SettingsFragment();
 
     //Реализация иконок погоды через шрифт (но можно и через setImageDrawable)
     private Typeface weatherFont;
     private TextView cityTextView;
-    private TextView updatedTextView;
+    private TextView updatedTimeTextView;
     private TextView detailsTextView;
     private TextView currentTemperatureTextView;
     private TextView weatherIcon;
@@ -73,7 +72,10 @@ public class WeatherFragment extends BaseFragment {
 
         weatherFont = Typeface.createFromAsset(getActivity().getAssets(), FONT_FILENAME);//находим наш шрифт
         initRetorfit(); //в рамках последних архитектурных теорий. лучше выносить бизнес логику в призенторы
-        updateWeatherData(new CityPreference(activity).getCity());
+       //запрос погоды при первом запуске
+//        updateWeatherData(new CustomAppSetting(activity).getCity());
+        CustomAppSetting customAppSetting = new CustomAppSetting(activity);
+        updateWeatherData(customAppSetting.getLatitude(), customAppSetting.getLongitude());
 
         //получаем или восстанавливаем значение города
 //        if (savedInstanceState != null && savedInstanceState.containsKey(getResources().getString(R.string.nameCityKey))) {
@@ -89,7 +91,7 @@ public class WeatherFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.weather_fragment, container, false);
         cityTextView = rootView.findViewById(R.id.city_field);
-        updatedTextView = rootView.findViewById(R.id.updated_field);
+        updatedTimeTextView = rootView.findViewById(R.id.updated_field);
         detailsTextView = rootView.findViewById(R.id.details_field);
         currentTemperatureTextView = rootView.findViewById(R.id.current_temperature_field);
         weatherIcon = rootView.findViewById(R.id.weather_icon);
@@ -136,16 +138,17 @@ public class WeatherFragment extends BaseFragment {
                 .addConverterFactory(GsonConverterFactory.create())  //десериализатор JSON
                 .build();
         // Создаем объект, при помощи которого будем выполнять запросы
-        openWeather = retrofit.create(OpenWeather.class);
+        openWeatherByCoordinates = retrofit.create(OpenWeatherByCoordinates.class);
     }
 
     //Обновление/загрузка погодных данных
     //тут рекомендуеться отображать процесс загрузки
     /**В дальнейшем изменить на MVP модель*/
 
-    private void updateWeatherData(final String city) {
+    //openWeather.loadWeather(city, getResources().getString(R.string.Open_weather_map_app_id),"metric" )
+    private void updateWeatherData(final String lat, final String lon) {
         //"metric" - параметр, который говорит что мы делаем запрос метрических данных
-        openWeather.loadWeather(city, getResources().getString(R.string.Open_weather_map_app_id),"metric" )
+        openWeatherByCoordinates.loadByCoordinatesWeatherData( lat,lon,"metric",getResources().getString(R.string.Open_weather_map_app_id))
                 .enqueue(new Callback<WeatherRequest>() {
                     @Override
                     //onResponse - метод обратного вызова. вызывается при удачном запросу
@@ -178,7 +181,7 @@ public class WeatherFragment extends BaseFragment {
 
             DateFormat df = DateFormat.getDateTimeInstance();
             String updatedOn = df.format(new Date(response.body().getDt() * 1000));
-            updatedTextView.setText(String.format("Last update: %S", updatedOn));
+            updatedTimeTextView.setText(String.format("Last update: %S", updatedOn));
 
             //получение иконки
             setWeatherIcon(response.body().getWeather()[0].getId(), response.body().getSys().getSunrise() * 1000,
@@ -228,6 +231,9 @@ public class WeatherFragment extends BaseFragment {
 
     //Метод для доступа кнопки меню к данным
     public void changeCity(String city) {
-        updateWeatherData(city);
+//       updateWeatherData(city);
+    }
+    public void changeCoordinates(String lat, String lon){
+        updateWeatherData(lat, lon);
     }
 }

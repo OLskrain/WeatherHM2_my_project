@@ -82,4 +82,8 @@
     <string name="Error_server">Ошибка сервера</string>
     <string name="Open_weather_map_app_id">ac8e27ae2dc7a85df994b9c9b6293ea8</string>
     <string name="data_uploaded">Data uploaded</string>
+    <string name="by_coordinates">by coordinates</string>
+    <string name="by_city_name">by city name</string>
+    <string name="locating">locating</string>
+    <string name="refresh">refresh</string>
 </resources>

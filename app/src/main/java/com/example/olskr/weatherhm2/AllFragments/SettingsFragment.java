@@ -1,20 +1,33 @@
 package com.example.olskr.weatherhm2.AllFragments;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.olskr.weatherhm2.AllFragments.BaseFragment;
 import com.example.olskr.weatherhm2.R;
 
-public class SettingsFrafment extends BaseFragment {
+public class SettingsFragment extends BaseFragment implements ActivityCompat.OnRequestPermissionsResultCallback {
+
 
     protected String shape;
     protected Button button_settings_fragment;
+
 
     @Nullable
     @Override
@@ -24,15 +37,17 @@ public class SettingsFrafment extends BaseFragment {
     }
     @Override
     protected void initLayout(View view, Bundle savedInstanceState) {
-//        button_settings_fragment = view.findViewById(R.id.button_action_fragment);
-//
-//        shape = getString(R.string.temperatureC);
-//
+        button_settings_fragment = view.findViewById(R.id.button_settings_fragment);
+        shape = getString(R.string.temperatureC);
+
+
+
+
 //        RadioButton radioButton1 = view.findViewById(R.id.radioButton11);
 //        radioButton1.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                shape = getString(R.string.temperatureC);
+////                shape = getString(R.string.temperatureC);
 //            }
 //        });
 //
@@ -40,7 +55,7 @@ public class SettingsFrafment extends BaseFragment {
 //        radioButton2.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                shape = getString(R.string.temperatureF);
+////                shape = getString(R.string.temperatureF);
 //            }
 //        });
 //
@@ -52,5 +67,4 @@ public class SettingsFrafment extends BaseFragment {
 //            }
 //        });
     }
-
 }

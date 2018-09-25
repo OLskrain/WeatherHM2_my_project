@@ -4,6 +4,9 @@
 
     <!--Разрешение пользваться интернетом-->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--Добавляем разрешение для геолокации. Первое - это грубое определение. второе - это точное-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".App"

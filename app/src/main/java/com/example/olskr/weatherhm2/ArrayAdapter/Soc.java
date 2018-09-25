@@ -1,4 +1,4 @@
-package com.example.olskr.weatherhm2;
+package com.example.olskr.weatherhm2.ArrayAdapter;
 
 // класс, где мы храним данные для карточки
 public class Soc {

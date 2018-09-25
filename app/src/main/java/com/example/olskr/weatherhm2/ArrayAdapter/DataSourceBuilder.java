@@ -1,7 +1,9 @@
-package com.example.olskr.weatherhm2;
+package com.example.olskr.weatherhm2.ArrayAdapter;
 
 import android.content.res.Resources;
-import android.content.res.TypedArray;
+
+import com.example.olskr.weatherhm2.ArrayAdapter.Soc;
+import com.example.olskr.weatherhm2.R;
 
 import java.util.ArrayList;
 import java.util.List;

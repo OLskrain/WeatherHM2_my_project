@@ -1,4 +1,4 @@
-package com.example.olskr.weatherhm2;
+package com.example.olskr.weatherhm2.ArrayAdapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.olskr.weatherhm2.R;
 
 import java.util.List;
 
